@@ -1,6 +1,6 @@
 # Generalized Jacobians (Lean 4.35.0-rc2)
 
-[![Lean](https://github.com/n-yamaguchi-0729/JacobianVarieties/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/JacobianVarieties/actions/workflows/lean.yml)
+[![Lean](https://github.com/n-yamaguchi-0729/GeneralizedJacobianVarieties/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/GeneralizedJacobianVarieties/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 This Lean component of [NYLL](https://github.com/n-yamaguchi-0729/NYLL) develops generalized Jacobians of algebraic
@@ -42,7 +42,7 @@ lakefile.toml:
 ```toml
 [[require]]
 name = "Nyll"
-git = "https://github.com/n-yamaguchi-0729/JacobianVarieties.git"
+git = "https://github.com/n-yamaguchi-0729/GeneralizedJacobianVarieties.git"
 rev = "main"
 ```
 
