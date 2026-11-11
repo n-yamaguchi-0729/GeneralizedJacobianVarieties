@@ -19,9 +19,9 @@ are retained in the files and in [NOTICE](NOTICE).
 <!-- nyll-publication:jacobian-main-results:begin -->
 | Result | Mathematical content |
 | --- | --- |
-| [Zero modulus](Nyll/JacobianVarieties/Generalized/EmptyOrdinaryComparison.lean#L34) and [Picard-zero sheaf](Nyll/JacobianVarieties/Generalized/ExistingJacobianSheafRepresentation.lean#L86) | For a smooth proper geometrically integral curve over an arbitrary field, the zero-modulus generalized Jacobian is the ordinary Jacobian representing the fppf Picard-zero sheaf. The generalized construction commutes with [field extensions](Nyll/JacobianVarieties/Generalized/ScalarExtensionGroupScheme.lean#L67). |
-| [Modulus existence and factorization](Nyll/JacobianVarieties/Generalized/GeneralGroupPicardOneFactorization.lean#L35) and its [pointed form](Nyll/JacobianVarieties/Generalized/GeneralGroupPointedFactorization.lean#L30) | A morphism from a nonempty open of such a curve to a separated commutative group scheme locally of finite type admits a modulus and a unique equivariant factor through the Picard degree-one torsor for that modulus. The pointed form assumes a rational point in the open sent to the identity, and gives a group factor. |
-| [Least conductor](Nyll/JacobianVarieties/Generalized/GeneralGroupLocalSymbolExistence.lean#L70) and [product formula](Nyll/JacobianVarieties/Generalized/GeneralGroupProductConductor.lean#L103) | Over an algebraically closed field in any characteristic, a least full conductor classifies the moduli of the point-value function extended by the identity outside the open. The conductor of a product is the coefficientwise maximum. |
+| [Zero modulus](Nyll/JacobianVarieties/Generalized/EmptyOrdinaryComparison.lean#L39) and [Picard-zero sheaf](Nyll/JacobianVarieties/Generalized/ExistingJacobianSheafRepresentation.lean#L90) | For a smooth proper geometrically integral curve over an arbitrary field, the zero-modulus generalized Jacobian is the ordinary Jacobian representing the fppf Picard-zero sheaf. The generalized construction commutes with [field extensions](Nyll/JacobianVarieties/Generalized/ScalarExtensionGroupScheme.lean#L72). |
+| [Modulus existence and factorization](Nyll/JacobianVarieties/Generalized/GeneralGroupPicardOneFactorization.lean#L36) and its [pointed form](Nyll/JacobianVarieties/Generalized/GeneralGroupPointedFactorization.lean#L30) | A morphism from a nonempty open of such a curve to a separated commutative group scheme locally of finite type admits a modulus and a unique equivariant factor through the Picard degree-one torsor for that modulus. The pointed form assumes a rational point in the open sent to the identity, and gives a group factor. |
+| [Least conductor](Nyll/JacobianVarieties/Generalized/GeneralGroupLocalSymbolExistence.lean#L74) and [product formula](Nyll/JacobianVarieties/Generalized/GeneralGroupProductConductor.lean#L107) | Over an algebraically closed field in any characteristic, a least full conductor classifies the moduli of the point-value function extended by the identity outside the open. The conductor of a product is the coefficientwise maximum. |
 | [Tate-module comparison](Nyll/JacobianVarieties/Kummer/AbelJacobiTate.lean) | Over an algebraically closed field of characteristic zero, a Picard representation and Abel–Jacobi morphism compatible with point line bundles induce a topological isomorphism π₁(C)ᵃᵇ ≃ T(J). |
 <!-- nyll-publication:jacobian-main-results:end -->
 
@@ -35,7 +35,7 @@ analytic uniformization and pinching comparisons also remain open.
 
 ## Public API
 
-Use [leanprover/lean4:v4.35.0-rc2](lean-toolchain) and the Mathlib revision pinned in
+Use [leanprover/lean4:v4.35.0](lean-toolchain) and the Mathlib revision pinned in
 [lake-manifest.json](lake-manifest.json). Add this dependency to your project’s
 lakefile.toml:
 
