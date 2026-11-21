@@ -3,6 +3,8 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/Definitions/Def_AlgebraicGeometry_MumfordTruncation.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_TwoChartCech_Mumford_finite_K0.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_TwoChartCech_Mumford_flat_K0.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -16,6 +18,9 @@ public import Mathlib.LinearAlgebra.Prod
 public import Mathlib.LinearAlgebra.Quotient.Basic
 public import Mathlib.RingTheory.Finiteness.Cardinality
 public import Mathlib.Algebra.Module.Projective
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.SchemeTheory.RingTheory.Flat.Kernel
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
 
 /-!
 # Kernel-coproduct truncations of two-term complexes
@@ -130,6 +135,48 @@ theorem ι1_eq : ι1 d = -lift d := rfl
 theorem comm : d ∘ₗ ι0 d = ι1 d ∘ₗ dK d := KerCoprod.comm d (lift d)
 
 theorem ι0_prod_dK : (ι0 d).prod (dK d) = (K0 d).subtype := KerCoprod.ι0_prod_dK d (lift d)
+
+/-- Embed the original kernel into the enlarged kernel with zero presentation coordinate. -/
+def kerToK0 : LinearMap.ker d →ₗ[R] K0 d :=
+  LinearMap.codRestrict (K0 d)
+    ((LinearMap.inl R C0 (Fin (rank d) → R)).comp (LinearMap.ker d).subtype)
+    (fun ⟨x, hx⟩ => by
+      simp only [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.coe_subtype,
+        LinearMap.inl_apply,
+        LinearMap.coprod_apply, map_zero, add_zero]
+      exact hx)
+
+/-- Identify the kernel of the presentation projection with the original kernel. -/
+def kerEquiv : LinearMap.ker (dK d) ≃ₗ[R] LinearMap.ker d := by
+  refine LinearEquiv.ofLinearMap
+    (LinearMap.codRestrict (LinearMap.ker d) ((ι0 d).comp (LinearMap.ker (dK d)).subtype) ?_)
+    (LinearMap.codRestrict (LinearMap.ker (dK d)) (kerToK0 d) (fun x => by
+      simp only [LinearMap.mem_ker, dK_apply]; rfl))
+    ?_ ?_
+  · rintro ⟨⟨⟨x, v⟩, hxv⟩, hv⟩
+    have hxv' : d x + lift d v = 0 := (mem_K0_iff d _).mp hxv
+    have hv' : v = 0 := (LinearMap.mem_ker).mp hv
+    simp only [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.coe_subtype, ι0_apply]
+    simpa only [hv', map_zero, add_zero] using hxv'
+  · apply LinearMap.ext; rintro ⟨x, hx⟩; rfl
+  · apply LinearMap.ext; rintro ⟨⟨⟨x, v⟩, hxv⟩, hv⟩
+    have hv' : v = 0 := (LinearMap.mem_ker).mp hv
+    apply Subtype.ext; apply Subtype.ext
+    change ((x, 0) : C0 × _) = (x, v)
+    rw [hv']
+
+
+theorem finite_K0 [IsNoetherianRing R] [Module.Finite R (LinearMap.ker d)] :
+    Module.Finite R (K0 d) := by
+  have hker : Module.Finite R (LinearMap.ker (dK d)) := Module.Finite.equiv (kerEquiv d).symm
+  have hquot : Module.Finite R (K0 d ⧸ LinearMap.ker (dK d)) := by
+    have : Module.Finite R (LinearMap.range (dK d)) := inferInstance
+    exact Module.Finite.equiv (dK d).quotKerEquivRange.symm
+  exact Module.Finite.of_submodule_quotient (LinearMap.ker (dK d))
+
+theorem flat_K0 [Module.Flat R C0] [Module.Flat R C1] : Module.Flat R (K0 d) :=
+  haveI : Module.Flat R (C0 × (Fin (rank d) → R)) := Module.Flat.prod (R := R) C0 _
+  Module.Flat.ker_of_surjective_of_flat (d.coprod (lift d)) (surjective_coprod d)
 
 end Mumford
 
